@@ -52,6 +52,10 @@ const Home = () => {
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <div className="w-1/4">
+        <h1 className="mb-16 text-3xl font-semibold text-center text-gray-800">
+          Next.js + PayPal Integration
+        </h1>
+
         {orderDetails && (
           <pre className="absolute top-0 right-0 w-1/3 h-64 text-xs bg-gray-200 border-2 border-gray-500 overflow-scroll">
             <h2 className="mb-4 font-semibold">Order Result:</h2>
