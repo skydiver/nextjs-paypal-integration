@@ -68,8 +68,7 @@ const Home = () => {
 
         <PayPalScriptProvider
           options={{
-            'client-id':
-              'ARZFn9joxeTaOb8GLoJPx5LmG4RbX7CyaKjFD0FVbHSc1oixI7T4Q0tzBCNHgFwf1r2PapXus51c6lQY'
+            'client-id': process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID
           }}>
           <PayPalButtons
             fundingSource={FUNDING.PAYPAL}
