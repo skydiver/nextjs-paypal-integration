@@ -3,10 +3,12 @@ import { PayPalScriptProvider, PayPalButtons, FUNDING } from '@paypal/react-payp
 
 import Warning from '../components/Warning';
 import Success from '../components/Success';
+import Spinner from '../components/Spinner';
 
 const Home = () => {
   const [cancelled, setCancelled] = useState(false);
   const [orderDetails, setOrderDetails] = useState(null);
+  const [loading, setLoading] = useState(null);
 
   const createOrder = (data, actions) => {
     return actions.order
@@ -29,6 +31,8 @@ const Home = () => {
   };
 
   const onApprove = (data, actions) => {
+    setLoading('Finishing transaction ...');
+
     actions.order.get().then((orderDetails) => {
       // ORDER IS APPROVED BUT NOT COMPLETED YET
       // console.log({ orderDetails });
@@ -36,6 +40,7 @@ const Home = () => {
       actions.order.capture().then((data) => {
         // ORDER IS COMPLETED, MONEY SENT
         setOrderDetails({ data });
+        setLoading(null);
       });
     });
   };
@@ -58,6 +63,8 @@ const Home = () => {
         {orderDetails && (
           <Success message="Transaction complete!" dismiss={() => setOrderDetails(null)} />
         )}
+
+        {loading && <Spinner message={loading} />}
 
         <PayPalScriptProvider
           options={{
