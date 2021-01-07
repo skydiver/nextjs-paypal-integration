@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { PayPalScriptProvider, PayPalButtons, FUNDING } from '@paypal/react-paypal-js';
 
 import Warning from '../components/Warning';
+import Success from '../components/Success';
 
 const Home = () => {
   const [cancelled, setCancelled] = useState(false);
@@ -27,8 +28,16 @@ const Home = () => {
       });
   };
 
-  const onApprove = (data) => {
-    setOrderDetails(data);
+  const onApprove = (data, actions) => {
+    actions.order.get().then((orderDetails) => {
+      // ORDER IS APPROVED BUT NOT COMPLETED YET
+      // console.log({ orderDetails });
+
+      actions.order.capture().then((data) => {
+        // ORDER IS COMPLETED, MONEY SENT
+        setOrderDetails({ data });
+      });
+    });
   };
 
   const onCancel = () => {
@@ -38,13 +47,16 @@ const Home = () => {
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <div className="w-1/4">
-        {cancelled && <Warning message="Order cancelled!" dismiss={() => setCancelled(false)} />}
-
         {orderDetails && (
-          <pre className="absolute top-0 right-0 w-1/3 bg-gray-200 border-2 border-gray-500 overflow-scroll">
+          <pre className="absolute top-0 right-0 w-1/3 h-64 text-xs bg-gray-200 border-2 border-gray-500 overflow-scroll">
             <h2 className="mb-4 font-semibold">Order Result:</h2>
             {JSON.stringify(orderDetails, null, 2)}
           </pre>
+        )}
+
+        {cancelled && <Warning message="Order cancelled!" dismiss={() => setCancelled(false)} />}
+        {orderDetails && (
+          <Success message="Transaction complete!" dismiss={() => setOrderDetails(null)} />
         )}
 
         <PayPalScriptProvider
