@@ -1,0 +1,12 @@
+{
+  "files.associations": {
+    "*.js": "javascriptreact"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}
