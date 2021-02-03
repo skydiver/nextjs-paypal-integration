@@ -1,89 +1,47 @@
-import { useState } from 'react';
-import { PayPalScriptProvider, PayPalButtons, FUNDING } from '@paypal/react-paypal-js';
+import React from 'react';
+import Link from 'next/link';
 
-import Warning from '../components/Warning';
-import Success from '../components/Success';
-import Spinner from '../components/Spinner';
+const Home = () => (
+  <div className="w-1/2 h-screen mx-auto flex flex-col items-center justify-center text-gray-800">
+    <h1 className="mb-10 text-6xl font-semibold">Next.js + PayPal Integration</h1>
+    <div className="w-full flex flex-row items-center justify-center">
+      <Link href="/single-payment">
+        <a className="w-1/2 flex flex-col items-center justify-center m-4 p-4 bg-gray-50 hover:bg-gray-700 hover:text-white border-4 border-gray-600 rounded-lg">
+          <h2 className="mb-8 text-3xl font-semibold">Single payment</h2>
+          <svg
+            className="w-24 h-24"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+        </a>
+      </Link>
 
-const Home = () => {
-  const [cancelled, setCancelled] = useState(false);
-  const [orderDetails, setOrderDetails] = useState(null);
-  const [loading, setLoading] = useState(null);
-
-  const createOrder = (data, actions) => {
-    return actions.order
-      .create({
-        application_context: {
-          shipping_preference: 'NO_SHIPPING'
-        },
-        purchase_units: [
-          {
-            amount: {
-              currency: 'USD',
-              value: 10
-            }
-          }
-        ]
-      })
-      .then((orderID) => {
-        return orderID;
-      });
-  };
-
-  const onApprove = (data, actions) => {
-    setLoading('Finishing transaction ...');
-
-    actions.order.get().then((orderDetails) => {
-      // ORDER IS APPROVED BUT NOT COMPLETED YET
-      // console.log({ orderDetails });
-
-      actions.order.capture().then((data) => {
-        // ORDER IS COMPLETED, MONEY SENT
-        setOrderDetails({ data });
-        setLoading(null);
-      });
-    });
-  };
-
-  const onCancel = () => {
-    setCancelled(true);
-  };
-
-  return (
-    <div className="w-screen h-screen flex flex-col items-center justify-center">
-      <div className="w-1/4">
-        <h1 className="mb-16 text-3xl font-semibold text-center text-gray-800">
-          Next.js + PayPal Integration
-        </h1>
-
-        {orderDetails && (
-          <pre className="absolute top-0 right-0 w-1/3 h-64 text-xs bg-gray-200 border-2 border-gray-500 overflow-scroll">
-            <h2 className="mb-4 font-semibold">Order Result:</h2>
-            {JSON.stringify(orderDetails, null, 2)}
-          </pre>
-        )}
-
-        {cancelled && <Warning message="Order cancelled!" dismiss={() => setCancelled(false)} />}
-        {orderDetails && (
-          <Success message="Transaction complete!" dismiss={() => setOrderDetails(null)} />
-        )}
-
-        {loading && <Spinner message={loading} />}
-
-        <PayPalScriptProvider
-          options={{
-            'client-id': process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID
-          }}>
-          <PayPalButtons
-            fundingSource={FUNDING.PAYPAL}
-            createOrder={createOrder}
-            onApprove={onApprove}
-            onCancel={onCancel}
-          />
-        </PayPalScriptProvider>
-      </div>
+      <Link href="/subscriptions">
+        <a className="w-1/2 flex flex-col items-center justify-center m-4 p-4 bg-gray-50 hover:bg-gray-700 hover:text-white border-4 border-gray-600 rounded-lg">
+          <h2 className="mb-8 text-3xl font-semibold">Subscriptions</h2>
+          <svg
+            className="w-24 h-24"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+          </svg>
+        </a>
+      </Link>
     </div>
-  );
-};
+  </div>
+);
 
 export default Home;
