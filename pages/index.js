@@ -2,11 +2,13 @@ import React from 'react';
 import Link from 'next/link';
 
 const Home = () => (
-  <div className="w-1/2 h-screen mx-auto flex flex-col items-center justify-center text-gray-800">
-    <h1 className="mb-10 text-6xl font-semibold">Next.js + PayPal Integration</h1>
-    <div className="w-full flex flex-row items-center justify-center">
+  <div className="w-full lg:w-1/2 h-screen mx-auto flex flex-col items-center justify-center text-gray-800">
+    <h1 className="mb-10 text-4xl lg:text-6xl font-semibold text-center">
+      Next.js + PayPal Integration
+    </h1>
+    <div className="w-full px-4 flex flex-col md:flex-row items-center justify-center">
       <Link href="/single-payment">
-        <a className="w-1/2 flex flex-col items-center justify-center m-4 p-4 bg-gray-50 hover:bg-gray-700 hover:text-white border-4 border-gray-600 rounded-lg">
+        <a className="w-full md:w-1/2 flex flex-col items-center justify-center m-4 p-4 bg-gray-50 hover:bg-gray-700 hover:text-white border-4 border-gray-600 rounded-lg">
           <h2 className="mb-8 text-3xl font-semibold">Single payment</h2>
           <svg
             className="w-24 h-24"
@@ -24,7 +26,7 @@ const Home = () => (
       </Link>
 
       <Link href="/subscriptions">
-        <a className="w-1/2 flex flex-col items-center justify-center m-4 p-4 bg-gray-50 hover:bg-gray-700 hover:text-white border-4 border-gray-600 rounded-lg">
+        <a className="w-full md:w-1/2 flex flex-col items-center justify-center m-4 p-4 bg-gray-50 hover:bg-gray-700 hover:text-white border-4 border-gray-600 rounded-lg">
           <h2 className="mb-8 text-3xl font-semibold">Subscriptions</h2>
           <svg
             className="w-24 h-24"
